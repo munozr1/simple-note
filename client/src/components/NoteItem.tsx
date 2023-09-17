@@ -1,5 +1,5 @@
 import { Note } from "../types";
-import { Typography, Box, Paper, TextField, Stack } from "@mui/material";
+import { Typography, Box, Card, TextField, Stack } from "@mui/material";
 import NoteMenu from "./NoteMenu";
 import { ChangeEventHandler, useState } from "react";
 import { useMutation } from "@apollo/client";
@@ -42,7 +42,7 @@ const NoteItem = ({ note }: NoteProps) => {
 
     return (
         <Box sx={{ p: 1 }}>
-            <Paper elevation={5} sx={{ p: 2 }}>
+            <Card elevation={5} sx={{ p: 2 }} variant={editing ? "dip" : "pop"} >
                 <Box display="flex" flexDirection="row">
                     <Box flexGrow={1}>
                         {editing ? (
@@ -50,7 +50,6 @@ const NoteItem = ({ note }: NoteProps) => {
                                 <TextField
                                     label="Title"
                                     name="title"
-                                    variant="outlined"
                                     value={noteText.title}
                                     onChange={onInputChange}
                                 />
@@ -59,9 +58,8 @@ const NoteItem = ({ note }: NoteProps) => {
                                     name="body"
                                     value={noteText.body}
                                     onChange={onInputChange}
-                                    variant="outlined"
                                     multiline
-                                    minRows={4}
+                                    minRows={1}
                                     maxRows={10}
                                 />
                             </Stack>
@@ -78,7 +76,7 @@ const NoteItem = ({ note }: NoteProps) => {
                     </Box>
                     <NoteMenu onToggleEdit={toggleEdit} id={note._id} />
                 </Box>
-            </Paper>
+            </Card>
         </Box>
     );
 };

@@ -6,25 +6,18 @@ import {
     Typography,
     Button,
 } from "@mui/material";
-import { Menu as MenuIcon } from "@mui/icons-material";
+import { Info as InfoIcon, Brightness4 as ThemeIcon  } from "@mui/icons-material";
 import auth from "../utils/auth";
+import { useContext } from "react";
+import ColorModeContext from "../utils/ColorModeContext";
 
 const TopAppBar = () => {
-
+    const colorMode = useContext(ColorModeContext);
 
     return (
         <Box>
-            <AppBar position="static">
+            <AppBar position="static" color="transparent">
                 <Toolbar>
-                    <IconButton
-                        size="large"
-                        edge="start"
-                        color="inherit"
-                        aria-label="menu"
-                        sx={{ mr: 2 }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
                     <Typography
                         variant="h6"
                         component="div"
@@ -32,7 +25,17 @@ const TopAppBar = () => {
                     >
                         SimpleNote
                     </Typography>
-                    <Button color="inherit" onClick={auth.logout}>Logout</Button>
+                    {auth.loggedIn() && <Button color="inherit" onClick={auth.logout}>Logout</Button>}
+                    <IconButton
+                        size="large"
+                        edge="start"
+                        color="inherit"
+                        aria-label="menu"
+                        sx={{ mr: 2, ml: 2 }}
+                        onClick={colorMode.toggleColorMode}
+                    >
+                        <ThemeIcon />
+                    </IconButton>
                 </Toolbar>
             </AppBar>
         </Box>

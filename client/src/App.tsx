@@ -5,27 +5,9 @@ import TopAppBar from "./components/TopAppBar";
 import { useEffect, useMemo, useState } from "react";
 import { Note } from "./types";
 import { ME } from "./utils/queries.js";
-import LoginModal from "./components/LoginModal";
+import Login from "./components/Login";
 import auth from "./utils/auth.js";
 import { useQuery } from "@apollo/client";
-
-// https://paol-imi.github.io/muuri-react/
-
-// const LOREM =
-//     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi similique natus necessitatibus, corrupti suscipit minus fugiat tenetur perspiciatis quae, harum in? Repellendus possimus vero voluptas dolorum modi nostrum debitis nesciunt expedita eum quaerat quasi inventore alias, consectetur veniam ab dignissimos corrupti hic eveniet soluta incidunt quod, officia maxime nobis. Ullam!";
-
-// const FAKE_NOTES: Note[] = [];
-
-// for (let i = 0; i < 15; i++) {
-//     const note = {
-//         id: String(i),
-//         title: "Note " + i,
-//         body: LOREM.split(" ")
-//             .splice(0, Math.floor(Math.random() * 50))
-//             .join(" "),
-//     };
-//     FAKE_NOTES.push(note);
-// }
 
 const getSortFunction = (sort: string) => {
     switch (sort) {
@@ -51,6 +33,9 @@ const getSortFunction = (sort: string) => {
                 return 0;
             };
             break;
+        case "CAT":
+
+        break;
     }
     return;
 };
@@ -60,7 +45,6 @@ const App = () => {
     const notes: Note[] = useMemo(() => data?.me.notes || [], [data]);
     const [displayNotes, setDisplayNotes] = useState<Note[]>([]);
 
-    // const [notes, setNotes] = useState<Note[]>(FAKE_NOTES);
     useEffect(() => {
         setDisplayNotes(notes);
     }, [notes]);
@@ -90,21 +74,21 @@ const App = () => {
     return (
         <>
             <TopAppBar />
-            <Container
-                maxWidth="lg"
-                sx={{ p: 5, display: "flex", justifyContent: "center" }}
-            >
-                {loading ? (
-                    <div>loading...</div>
-                ) : (
-                    <NoteContainer notes={displayNotes} />
-                )}
-                <ActionMenu
-                    onSort={sortNotes}
-                    onSearch={searchNotes}
-                />
-            </Container>
-            <LoginModal open={!auth.loggedIn()} />
+            {auth.loggedIn() ? (
+                <Container
+                    maxWidth="lg"
+                    sx={{ p: 5, display: "flex", justifyContent: "center" }}
+                >
+                    {loading ? (
+                        <div>loading...</div>
+                    ) : (
+                        <NoteContainer notes={displayNotes} />
+                    )}
+                    <ActionMenu onSort={sortNotes} onSearch={searchNotes} />
+                </Container>
+            ) : (
+                <Login />
+            )}
         </>
     );
 };

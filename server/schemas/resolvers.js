@@ -13,15 +13,6 @@ module.exports = {
             }
             throw new AuthenticationError("Not logged in");
         },
-        // notes: async (parent, args, context) => {
-        //     if (context.user) {
-        //         const { data: notes } = await User.findOne({
-        //             _id: context.user._id,
-        //         }).select("-__v");
-        //         return notes;
-        //     }
-        //     throw new AuthenticationError("Not logged in");
-        // },
     },
     Mutation: {
         signUp: async (parent, args) => {

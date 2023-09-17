@@ -64,22 +64,6 @@ const FilterButton = ({onSort}: FilterButtonProps) => {
                 >
                     Name (Z-A)
                 </MenuItem>
-                <MenuItem
-                    onClick={() => {
-                        console.log("Date Updated");
-                        handleClose();
-                    }}
-                >
-                    Date Updated
-                </MenuItem>
-                <MenuItem
-                    onClick={() => {
-                        console.log("Date Created");
-                        handleClose();
-                    }}
-                >
-                    Date Created
-                </MenuItem>
             </Menu>
         </>
     );

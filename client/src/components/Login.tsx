@@ -1,12 +1,14 @@
 import {
+    Box,
     Button,
     Card,
     Container,
-    Modal,
+    FormGroup,
     Stack,
     Tab,
     Tabs,
     TextField,
+    useTheme,
 } from "@mui/material";
 import React, { useState, ChangeEventHandler, FormEventHandler } from "react";
 import auth from "../utils/auth";
@@ -19,16 +21,6 @@ const BLANK_INPUT = {
     password: "",
 };
 
-interface CustomTabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-}
-
-interface LoginModalProps {
-    open: boolean;
-}
-
 interface InputData {
     email?: string;
     username: string;
@@ -39,15 +31,8 @@ interface LoginInput extends HTMLInputElement {
     name: "email" | "username" | "password";
 }
 
-const CustomTabPanel = ({ children, value, index }: CustomTabPanelProps) => {
-    return (
-        <div hidden={value !== index} id={`tabpanel-${index}`}>
-            {value === index && <> {children} </>}
-        </div>
-    );
-};
 
-const LoginModal = ({ open }: LoginModalProps) => {
+const LoginModal = () => {
     const [selectedTab, setSelectedTab] = useState(0);
     const [inputData, setInputData] = useState<InputData>(BLANK_INPUT);
 
@@ -59,6 +44,7 @@ const LoginModal = ({ open }: LoginModalProps) => {
     });
 
     const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+        setInputData(BLANK_INPUT)
         setSelectedTab(newValue);
     };
 
@@ -71,12 +57,13 @@ const LoginModal = ({ open }: LoginModalProps) => {
 
     const handleInputSubmit: FormEventHandler = async (event) => {
         event.preventDefault();
-
+        console.log("submit", inputData);
+        
         if (selectedTab === 1) {
             try {
                 const { data } = await signUp();
-                await signUp();
                 resetSignUp();
+                console.log(data.signUp.token)
                 auth.login(data.signUp.token);
             } catch (error) {
                 console.error("Sign Up Error:", error);
@@ -86,7 +73,6 @@ const LoginModal = ({ open }: LoginModalProps) => {
 
         try {
             const { data } = await login();
-            await login();
             resetLogin();
             auth.login(data.login.token);
         } catch (error) {
@@ -95,61 +81,52 @@ const LoginModal = ({ open }: LoginModalProps) => {
     };
 
     return (
-        <Modal open={open}>
+        <Box sx={{ marginTop: "5%" }}>
             <Container
                 maxWidth="md"
                 sx={{
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "center",
-                    height: "100vh",
                 }}
             >
-                <Card sx={{ height: "70%" }}>
-                    <Tabs value={selectedTab} onChange={handleTabChange}>
+                <Stack spacing={2} alignItems="center">
+                    <Tabs value={selectedTab} onChange={handleTabChange} centered={true}>
                         <Tab label="Login" />
                         <Tab label="Sign Up" />
                     </Tabs>
-                    <CustomTabPanel value={selectedTab} index={0}>
-                        <Stack>
-                            <TextField
-                                label="Email"
-                                name="email"
-                                onChange={handleInputChange}
-                            />
-                            <TextField
-                                label="Password"
-                                name="password"
-                                onChange={handleInputChange}
-                                type="password"
-                            />
-                            <Button onClick={handleInputSubmit}>Login</Button>
-                        </Stack>
-                    </CustomTabPanel>
-                    <CustomTabPanel value={selectedTab} index={1}>
-                        <Stack>
-                            <TextField
-                                label="Email"
-                                name="email"
-                                onChange={handleInputChange}
-                            />
+                    <FormGroup sx={{width: "60%"}}>
+                        {selectedTab === 1 && (
                             <TextField
                                 label="Username"
                                 name="username"
+                                variant="standard"
+                                value={inputData.username}
                                 onChange={handleInputChange}
                             />
-                            <TextField
-                                label="Password"
-                                name="password"
-                                onChange={handleInputChange}
-                                type="password"
-                            />
-                            <Button onClick={handleInputSubmit}>Sign Up</Button>
-                        </Stack>
-                    </CustomTabPanel>
-                </Card>
+                        )}
+                        <TextField
+                            label="Email"
+                            name="email"
+                            variant="standard"
+                            value={inputData.email}
+                            onChange={handleInputChange}
+                        />
+                        <TextField
+                            label="Password"
+                            name="password"
+                            variant="standard"
+                            value={inputData.password}
+                            onChange={handleInputChange}
+                            type="password"
+                        />
+                    </FormGroup>
+                    <Button variant="contained" onClick={handleInputSubmit} sx={{width: "50%"}}>
+                        {selectedTab === 0 ? "Login" : "Sign Up"}
+                    </Button>
+                </Stack>
             </Container>
-        </Modal>
+        </Box>
     );
 };
 export default LoginModal;
