@@ -1,4 +1,4 @@
-import { PaletteOptions, ThemeOptions, createTheme } from "@mui/material";
+import { PaletteOptions, createTheme } from "@mui/material";
 
 const lightPalette: PaletteOptions = {
     mode: "light",

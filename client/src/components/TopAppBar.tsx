@@ -6,7 +6,7 @@ import {
     Typography,
     Button,
 } from "@mui/material";
-import { Info as InfoIcon, Brightness4 as ThemeIcon  } from "@mui/icons-material";
+import { Brightness4 as ThemeIcon  } from "@mui/icons-material";
 import auth from "../utils/auth";
 import { useContext } from "react";
 import ColorModeContext from "../utils/ColorModeContext";

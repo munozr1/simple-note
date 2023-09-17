@@ -4,10 +4,7 @@ import App from "./App.tsx";
 import "./index.css";
 import {
     CssBaseline,
-    PaletteColor,
-    PaletteOptions,
     ThemeProvider,
-    createTheme,
 } from "@mui/material";
 import {
     ApolloClient,
@@ -37,44 +34,6 @@ const client = new ApolloClient({
     link: authLink.concat(httpLink),
     cache: new InMemoryCache(),
 });
-
-const lightPalette: PaletteOptions = {
-    primary: {
-        main: "#3b3b3b",
-        light: "#5a5a5a",
-        dark: "#1b1b1b",
-        contrastText: "#d9d9d9",
-    },
-    secondary: {
-        main: "#2615c2",
-        light: "#4f24d1",
-        dark: "#0002b9",
-        contrastText: "#ede6fa",
-    },
-    background: {
-        default: "#d9d9d9",
-        paper: "#d9d9d9",
-    },
-};
-
-const darkPalette: PaletteOptions = {
-    primary: {
-        main: "#d9d9d9",
-        light: "#e9e9e9",
-        dark: "#b5b5b5",
-        contrastText: "#3b3b3b",
-    },
-    secondary: {
-        main: "#784cde",
-        light: "#784cde",
-        dark: "#2615c2",
-        contrastText: "#d9d9d9",
-    },
-    background: {
-        default: "#3b3b3b",
-        paper: "#3b3b3b",
-    },
-};
 
 const ThemedApp = () => {
     const savedMode =

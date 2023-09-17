@@ -1,14 +1,12 @@
 import {
     Box,
     Button,
-    Card,
     Container,
     FormGroup,
     Stack,
     Tab,
     Tabs,
     TextField,
-    useTheme,
 } from "@mui/material";
 import React, { useState, ChangeEventHandler, FormEventHandler } from "react";
 import auth from "../utils/auth";
@@ -44,6 +42,7 @@ const LoginModal = () => {
     });
 
     const handleTabChange = (event: React.SyntheticEvent, newValue: number) => {
+        console.log(event.target)
         setInputData(BLANK_INPUT)
         setSelectedTab(newValue);
     };
