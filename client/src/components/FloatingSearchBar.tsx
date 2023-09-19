@@ -20,7 +20,7 @@ const SearchBar = styled(Paper)(({ theme }) => ({
 }));
 
 const FloatingSearchBar = ({ onSearch }: FloatingSearchBarProps) => {
-    let searchTimeout: number | null = null;
+    let searchTimeout: NodeJS.Timeout | null = null;
 
     const handleChange: ChangeEventHandler<HTMLInputElement> = (event) => {
         if (searchTimeout != null) {
