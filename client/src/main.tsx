@@ -15,9 +15,9 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import ColorModeContext from "./utils/ColorModeContext.tsx";
 import InitTheme from "./utils/InitTheme.ts";
-
+console.log(import.meta.env.BACKEND_URI)
 const httpLink = createHttpLink({
-    uri: "/graphql",
+    uri: `${import.meta.env.VITE_BACKEND_URI || "/graphql"}`,
 });
 
 const authLink = setContext((_, { headers }) => {
