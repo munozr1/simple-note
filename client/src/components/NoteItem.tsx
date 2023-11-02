@@ -61,6 +61,7 @@ const NoteItem = ({ note }: NoteProps) => {
                                     multiline
                                     minRows={1}
                                     maxRows={10}
+                                    placeholder="Enter Text"
                                 />
                             </Stack>
                         ) : (
